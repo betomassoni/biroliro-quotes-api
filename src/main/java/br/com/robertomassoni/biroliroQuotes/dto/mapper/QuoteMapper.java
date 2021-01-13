@@ -18,7 +18,7 @@ public class QuoteMapper {
             quoteDto.setUrl(quote.getUrl());
             quoteDto.setCreatedAt(quote.getCreatedAt());
             quoteDto.setUpdatedAt(quote.getUpdatedAt());
-            quoteDto.setTagList(TagMapper.toTagString(quote.getTagList()));
+            quoteDto.setTags(TagMapper.toTagString(quote.getTagList()));
         }
         return quoteDto;
     }

@@ -2,7 +2,6 @@ package br.com.robertomassoni.biroliroQuotes.dto.mapper;
 
 import br.com.robertomassoni.biroliroQuotes.dto.model.TagDto;
 import br.com.robertomassoni.biroliroQuotes.model.Tag;
-import br.com.robertomassoni.biroliroQuotes.model.Tag;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.data.domain.Page;

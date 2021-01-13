@@ -41,8 +41,8 @@ public class QuoteServiceImpl implements QuoteService {
 
             // Adiciona a tag se não existir
             List<TagDto> tagDtoList = new ArrayList();
-            if (quoteDto.getTagList() != null) {
-                for (String tag : quoteDto.getTagList()) {
+            if (quoteDto.getTags() != null) {
+                for (String tag : quoteDto.getTags()) {
                     tagDtoList.add(tagService.addIfNotExist(tag));
                 }
             }
@@ -59,6 +59,11 @@ public class QuoteServiceImpl implements QuoteService {
             return QuoteMapper.toQuoteDto(quote);
         }
         throw BiroliroQuotesException.throwException(EntityType.QUOTES, ExceptionType.ENTITY_NOT_FOUND, null);
+    }
+
+    @Override
+    public QuoteDto getQuote(Integer id) {
+        return QuoteMapper.toQuoteDto(quoteRepository.getOne(id));
     }
 
 }

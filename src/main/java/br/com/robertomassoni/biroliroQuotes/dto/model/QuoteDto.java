@@ -9,7 +9,7 @@ public class QuoteDto {
     private String url;
     private Date createdAt;
     private Date updatedAt;
-    private List<String> tagList;
+    private List<String> tags;
 
     public String getValue() {
         return value;
@@ -43,12 +43,12 @@ public class QuoteDto {
         this.updatedAt = updatedAt;
     }
 
-    public List<String> getTagList() {
-        return tagList;
+    public List<String> getTags() {
+        return tags;
     }
 
-    public void setTagList(List<String> tagList) {
-        this.tagList = tagList;
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
 
 }
