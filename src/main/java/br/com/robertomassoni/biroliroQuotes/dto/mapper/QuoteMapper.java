@@ -14,6 +14,7 @@ public class QuoteMapper {
         QuoteDto quoteDto = null;
         if (quote != null) {
             quoteDto = new QuoteDto();
+            quoteDto.setId(quote.getId());
             quoteDto.setValue(quote.getValue());
             quoteDto.setUrl(quote.getUrl());
             quoteDto.setCreatedAt(quote.getCreatedAt());

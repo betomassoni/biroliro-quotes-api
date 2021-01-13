@@ -11,6 +11,7 @@ import br.com.robertomassoni.biroliroQuotes.model.Quote;
 import br.com.robertomassoni.biroliroQuotes.repository.QuoteRepository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -55,7 +56,7 @@ public class QuoteServiceImpl implements QuoteService {
             quote.setTagList(TagMapper.fromDtoToModel(tagDtoList));
 
             quote = quoteRepository.save(quote);
-            
+
             return QuoteMapper.toQuoteDto(quote);
         }
         throw BiroliroQuotesException.throwException(EntityType.QUOTES, ExceptionType.ENTITY_NOT_FOUND, null);
@@ -63,7 +64,22 @@ public class QuoteServiceImpl implements QuoteService {
 
     @Override
     public QuoteDto getQuote(Integer id) {
-        return QuoteMapper.toQuoteDto(quoteRepository.getOne(id));
+        Optional<Quote> quote = quoteRepository.findById(id);
+        if (quote.isPresent()) {
+            return QuoteMapper.toQuoteDto(quote.get());
+        } else {
+            throw BiroliroQuotesException.throwException(EntityType.QUOTES, ExceptionType.ENTITY_NOT_FOUND, id.toString());
+        }
+    }
+
+    @Override
+    public QuoteDto getRandomQuote() {
+        Optional<Quote> quote = quoteRepository.getRandom();
+        if (quote.isPresent()) {
+            return QuoteMapper.toQuoteDto(quote.get());
+        } else {
+            throw BiroliroQuotesException.throwException(EntityType.QUOTES, ExceptionType.ENTITY_NOT_FOUND, null);
+        }
     }
 
 }

@@ -31,5 +31,11 @@ public class QuoteController {
         return Response.ok().setContent(pageQuotesDto);        
     }
     
+    @GetMapping("/random/quote")
+    public Response getRandomQuote() {
+        QuoteDto pageQuotesDto = quoteService.getRandomQuote();                         
+        return Response.ok().setContent(pageQuotesDto);        
+    }
+    
   
 }

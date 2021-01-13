@@ -5,6 +5,7 @@ import java.util.List;
 
 public class QuoteDto {
 
+    private Integer id;
     private String value;
     private String url;
     private Date createdAt;
@@ -49,6 +50,14 @@ public class QuoteDto {
 
     public void setTags(List<String> tags) {
         this.tags = tags;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
 }

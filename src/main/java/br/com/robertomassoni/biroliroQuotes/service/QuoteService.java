@@ -8,4 +8,5 @@ public interface QuoteService {
     Page<QuoteDto> getQuotes(Pageable pageable);
     QuoteDto addQuote(QuoteDto quoteDto);
     QuoteDto getQuote(Integer id);
+    QuoteDto getRandomQuote();
 }
