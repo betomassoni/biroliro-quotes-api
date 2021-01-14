@@ -6,7 +6,6 @@ public class ResponseError {
 
     private Date timestamp;
     private String message;
-    private String details;
 
     public Date getTimestamp() {
         return timestamp;
@@ -24,14 +23,5 @@ public class ResponseError {
     public ResponseError setMessage(String message) {
         this.message = message;
         return this;
-    }
-
-    public String getDetails() {
-        return details;
-    }
-
-    public ResponseError setDetails(String details) {
-        this.details = details;
-        return this;
-    }        
+    }  
 }

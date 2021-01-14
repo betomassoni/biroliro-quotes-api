@@ -4,9 +4,9 @@ import br.com.robertomassoni.biroliroQuotes.dto.mapper.QuoteMapper;
 import br.com.robertomassoni.biroliroQuotes.dto.mapper.TagMapper;
 import br.com.robertomassoni.biroliroQuotes.dto.model.QuoteDto;
 import br.com.robertomassoni.biroliroQuotes.dto.model.TagDto;
-import br.com.robertomassoni.biroliroQuotes.enumerator.EntityType;
-import br.com.robertomassoni.biroliroQuotes.enumerator.ExceptionType;
-import br.com.robertomassoni.biroliroQuotes.exception.BiroliroQuotesException;
+import static br.com.robertomassoni.biroliroQuotes.enumerator.EntityType.*;
+import static br.com.robertomassoni.biroliroQuotes.enumerator.ExceptionType.*;
+import br.com.robertomassoni.biroliroQuotes.exception.BiroliroException;
 import br.com.robertomassoni.biroliroQuotes.model.Quote;
 import br.com.robertomassoni.biroliroQuotes.repository.QuoteRepository;
 import java.util.ArrayList;
@@ -26,19 +26,31 @@ public class QuoteServiceImpl implements QuoteService {
     @Autowired
     private TagService tagService;
 
+    
+
     @Override
     public Page<QuoteDto> getQuotes(Pageable pageable) {
-        Page<Quote> pageQuotes = quoteRepository.findAll(pageable);
-        if (!pageQuotes.isEmpty()) {
+        try {
+            Page<Quote> pageQuotes = quoteRepository.findAll(pageable);
+            if (pageQuotes.isEmpty()) {
+                throw new BiroliroException.EntityNotFoundException();
+            }
             List<QuoteDto> quotesDtoList = QuoteMapper.toQuoteDto(pageQuotes.getContent());
             return QuoteMapper.toPageQuoteDto(quotesDtoList, pageable, pageQuotes);
+        } catch (BiroliroException.EntityNotFoundException ex) {
+            throw BiroliroException.throwException(QUOTE, ENTITY_NOT_FOUND);
+        } catch (Exception ex) {
+            throw BiroliroException.throwException(QUOTE, ENTITY_EXCEPTION);
         }
-        throw BiroliroQuotesException.throwException(EntityType.QUOTES, ExceptionType.ENTITY_NOT_FOUND, null);
     }
 
     @Override
     public QuoteDto addQuote(QuoteDto quoteDto) {
-        if (quoteDto != null) {
+
+        try {
+            if (quoteDto != null) {
+                throw new BiroliroException.EntityNotFoundException();
+            }
 
             // Adiciona a tag se não existir
             List<TagDto> tagDtoList = new ArrayList();
@@ -58,27 +70,42 @@ public class QuoteServiceImpl implements QuoteService {
             quote = quoteRepository.save(quote);
 
             return QuoteMapper.toQuoteDto(quote);
+        } catch (BiroliroException.EntityNotFoundException ex) {
+            throw BiroliroException.throwException(QUOTE, ENTITY_IS_EMPTY);
+        } catch (Exception ex) {
+            throw BiroliroException.throwException(QUOTE, ENTITY_EXCEPTION);
         }
-        throw BiroliroQuotesException.throwException(EntityType.QUOTES, ExceptionType.ENTITY_NOT_FOUND, null);
     }
 
     @Override
-    public QuoteDto getQuote(Integer id) {
-        Optional<Quote> quote = quoteRepository.findById(id);
-        if (quote.isPresent()) {
+    public QuoteDto getQuote(String id) {
+        try {
+            Optional<Quote> quote = quoteRepository.findById(Integer.parseInt(id));
+            if (quote.isPresent() == false) {
+                throw new BiroliroException.EntityNotFoundException(id);
+            }
             return QuoteMapper.toQuoteDto(quote.get());
-        } else {
-            throw BiroliroQuotesException.throwException(EntityType.QUOTES, ExceptionType.ENTITY_NOT_FOUND, id.toString());
+        } catch (BiroliroException.EntityNotFoundException ex) {
+            throw BiroliroException.throwException(QUOTE, ENTITY_NOT_FOUND, id);
+        } catch (NumberFormatException ex) {
+            throw BiroliroException.throwException(QUOTE, ENTITY_INVALID_CODE, id);
+        } catch (Exception ex) {
+            throw BiroliroException.throwException(QUOTE, ENTITY_EXCEPTION);
         }
     }
 
     @Override
     public QuoteDto getRandomQuote() {
-        Optional<Quote> quote = quoteRepository.getRandom();
-        if (quote.isPresent()) {
+        try {
+            Optional<Quote> quote = quoteRepository.getRandom();
+            if (quote.isPresent() == false) {
+                throw new BiroliroException.EntityNotFoundException();
+            }
             return QuoteMapper.toQuoteDto(quote.get());
-        } else {
-            throw BiroliroQuotesException.throwException(EntityType.QUOTES, ExceptionType.ENTITY_NOT_FOUND, null);
+        } catch (BiroliroException.EntityNotFoundException ex) {
+            throw BiroliroException.throwException(QUOTE, ENTITY_NOT_FOUND);
+        } catch (Exception ex) {
+            throw BiroliroException.throwException(QUOTE, ENTITY_EXCEPTION);
         }
     }
 

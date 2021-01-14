@@ -26,7 +26,7 @@ public class QuoteController {
     }
     
     @GetMapping("/quote/{id}")
-    public Response getQuote(@PathVariable("id") Integer id) {
+    public Response getQuote(@PathVariable("id") String id) {
         QuoteDto pageQuotesDto = quoteService.getQuote(id);                         
         return Response.ok().setContent(pageQuotesDto);        
     }

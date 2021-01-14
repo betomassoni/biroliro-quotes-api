@@ -2,10 +2,11 @@ package br.com.robertomassoni.biroliroQuotes.enumerator;
 
 public enum ExceptionType {
 
-    ENTITY_NOT_FOUND("not found"),
+    ENTITY_NOT_FOUND("not.found"),
     DUPLICATE_ENTITY("duplicate"),
     ENTITY_EXCEPTION("exception"),
-    INVALID_CREDENTIALS("invalid credentials");
+    ENTITY_INVALID_CODE("invalid.code"),
+    ENTITY_IS_EMPTY("is.empty");
 
     String value;
 
@@ -18,3 +19,4 @@ public enum ExceptionType {
     }
 }
  
+
