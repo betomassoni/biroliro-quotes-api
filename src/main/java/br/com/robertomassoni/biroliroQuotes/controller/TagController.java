@@ -1,7 +1,6 @@
 package br.com.robertomassoni.biroliroQuotes.controller;
 
 import br.com.robertomassoni.biroliroQuotes.dto.mapper.PageableMapper;
-import br.com.robertomassoni.biroliroQuotes.dto.model.QuoteDto;
 import br.com.robertomassoni.biroliroQuotes.dto.model.TagDto;
 import br.com.robertomassoni.biroliroQuotes.dto.response.Response;
 import br.com.robertomassoni.biroliroQuotes.service.TagService;

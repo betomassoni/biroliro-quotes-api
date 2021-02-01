@@ -24,9 +24,10 @@ hs_err_pid*
 
 # Mac files
 ._*
+.DS_STORE
 
 database/
-
+.mvn/
 
 HELP.md
 target/
