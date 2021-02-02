@@ -52,6 +52,9 @@ a:hover {
 .main {
     display:table;
     height: 100%;
+    display: -webkit-inline-box;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
 }
 .cover {
     padding: 0 1.5rem;
